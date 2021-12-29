@@ -12,10 +12,12 @@ df1 = pd.read_excel('Processing Report.xlsx')
 df2 = pd.read_sql('SELECT * FROM Transactions', conn)
 
 # rename columns
-trans = df1.rename(columns={"Transaction Datetime": "created_at", "ARN": "acq_tid", "Currnecy": "currency"})
+trans = df1.rename(columns={"Transaction Datetime": "created_at",
+                            "ARN": "acq_tid", "Currnecy": "currency"})
 
 # combine the tables
-data = pd.merge(df2, trans[['Masked CCN', 'Amount', 'Card Brans', 'acq_tid']], how='left', on='acq_tid')
+data = pd.merge(df2, trans[['Masked CCN', 'Amount', 'Card Brans', 'acq_tid']],
+                how='left', on='acq_tid')
 
 # fill the missing data
 data['Amount'] = data['Amount'].fillna('0')
