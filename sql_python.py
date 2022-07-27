@@ -4,6 +4,8 @@ from sqlite3 import Error
 
 
 def sql_connection():
+    '''Create a connection with SQLite database specified
+        by the db.sqlite file'''
     try:
         db = sqlite3.connect("db.sqlite")
         return db
@@ -11,19 +13,24 @@ def sql_connection():
         print(Error)
 
 
-def read_excel_file(path):
-    df = pd.read_excel(path)
+def read_excel_file(file):
+    ''' Function to read Excel file'''
+    df = pd.read_excel(file)
     df = df.rename(columns={"Transaction Datetime": "created_at",
                             "ARN": "acq_tid", "Currnecy": "currency"})
     return df
 
-
+ 
 def read_sql(query, con):
+    ''' Function to read data from database'''
     df = pd.read_sql(query, con)
     return df
 
 
 def changes_data(df1, df2):
+    ''' The matching data from excel file to data from database'''
+    
+    # combine the tables
     data = pd.merge(df2, df1[['Masked CCN', 'Amount', 'Card Brans', 'acq_tid']],
                 how='left', on='acq_tid')
     
@@ -32,7 +39,6 @@ def changes_data(df1, df2):
     data['Masked CCN'] = data['Masked CCN'].fillna('0')
     data['Amount'] = data['Amount'].astype(str)
    
-
     # adjust the cb value to whether there is a chargeback or not
     for index in data.index:
         if data.loc[index, 'Amount'] == '0':
