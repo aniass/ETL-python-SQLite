@@ -5,8 +5,8 @@ This Python script allows to match reported chargebacks (excel file) with transa
 
 ### Technologies
 Project is created with:
-- Python 3.6
-- libraries: SQLite, pandas.
+- SQL, Python 3.6,
+- libraries: SQLite3, pandas.
 
 **Running the app:**
 
