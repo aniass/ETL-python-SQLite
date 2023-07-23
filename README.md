@@ -1,8 +1,7 @@
-# Excel to sqlite database with python
+# Excel file to SQLite database with python
 
 ## General info
-This Python script allows to match reported chargebacks (excel file) with transactions from the database.  We put an excel file to SQLite database and we make an analysis by using Pandas. We create an engine to connect with our database and load chose data into pandas dataframes. We select and filter data from database and match them to data comes from excel file.
-
+The Python script allows to match reported chargebacks (Excel file) with transactions from the database. Firstly I have putted an excel file to SQLite database and I made an analysis by Pandas. Then I  created an engine to connect with the database and loaded choosen data into pandas dataframes. Finally I selected and filtered data from database and matched them to data come from Excel file.
 ### Project includes:
 - Python script - **sql_python.py**
 - Analysis in Jupyter Notebook file - **Excel_to_database.ipynb**
