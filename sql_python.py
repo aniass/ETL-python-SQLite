@@ -3,16 +3,7 @@ import pandas as pd
 from sqlite3 import Error
 
 
-def sql_connection():
-    '''Create a connection with SQLite database specified
-        by the db.sqlite file'''
-    try:
-        db = sqlite3.connect("db.sqlite")
-        return db
-    except Error:
-        print(Error)
-
-
+# Extraction
 def read_excel_file(file):
     ''' Function to read Excel file'''
     df = pd.read_excel(file)
@@ -27,7 +18,8 @@ def read_sql(query, con):
     return df
 
 
-def changes_data(df1, df2):
+# Transformation
+def transform_data(df1, df2):
     ''' The matching data from excel file to data from database'''
     
     # combine the tables
@@ -50,16 +42,33 @@ def changes_data(df1, df2):
 
     # rename of Amount column on Amount_cb
     data = data.rename(columns={"Amount": "Amount_cb"})
-    print(data.head())
+    return data
+
+
+# Loading
+def load_data(db_name, file):
+    '''Create a connection with SQLite database specified
+        by the db.sqlite file'''
+    try:
+        connection = sqlite3.connect(db_name)
+        return connection
+    except Error:
+        print(Error)
+        
+    cur = connection.cursor()
+    df1 = read_excel_file(file)
+    df2 = read_sql('SELECT * FROM Transactions', connection)
+    data = transform_data(df1, df2)
     
     # put receive file to sql database
-    data.to_sql("Transactions_cb", con, if_exists="replace")
+    data.to_sql("Transactions_cb", connection, if_exists="replace")
+    cur.close()
+    connection.close()
 
 
 if __name__ == "__main__":
-    con = sql_connection()
-    cur = con.cursor()
-    df1 = read_excel_file('Processing Report.xlsx')
-    df2 = read_sql('SELECT * FROM Transactions', con)
-    changes_data(df1, df2)
-    con.close()
+    db_name = "db.sqlite"
+    file = 'Processing Report.xlsx'
+    load_data(db_name, file)
+    
+    
