@@ -5,7 +5,7 @@ from sqlite3 import Error
 
 # Extraction
 def read_excel_file(file):
-    ''' Function to read Excel file'''
+    '''Rread Excel file'''
     df = pd.read_excel(file)
     df = df.rename(columns={"Transaction Datetime": "created_at",
                             "ARN": "acq_tid", "Currnecy": "currency"})
@@ -13,14 +13,14 @@ def read_excel_file(file):
 
  
 def read_sql(query, con):
-    ''' Function to read data from database'''
+    '''Function to read data from database'''
     df = pd.read_sql(query, con)
     return df
 
 
 # Transformation
 def transform_data(df1, df2):
-    ''' The matching data from excel file to data from database'''
+    '''Data transformation: the matching data from excel file to data from database'''
     
     # combine the tables
     data = pd.merge(df2, df1[['Masked CCN', 'Amount', 'Card Brans', 'acq_tid']],
@@ -47,8 +47,8 @@ def transform_data(df1, df2):
 
 # Loading
 def load_data(db_name, file):
-    '''Create a connection with SQLite database specified
-        by the db.sqlite file'''
+    ''' Loading data: saving the transformed data in database'''
+    # Create a connection with SQLite database specified by the db.sqlite file
     try:
         connection = sqlite3.connect(db_name)
         return connection
