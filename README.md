@@ -11,7 +11,33 @@ The dataset contains two datasets about reported chargebacks (Excel file) and tr
 ### Project includes:
 - ETL script - **sql_python.py**
 - ETL process and analysis in Jupyter Notebook file - **Excel_to_database.ipynb**
-    
+
+## Summary:
+The project consists of classical ETL steps:
+
+**1. Extract:**
+
+This stage is used to extract data from data sources. 
+- The data are in two formats: excel file and  SQLite database. 
+- I have used pandas library to extract data from excel file into dataframe. I loaded data from the database in the same way.
+
+**2. Transform:**
+  
+This stage is used for transform data. 
+
+In this step I have used python and pandas to transform data:
+- I combined the two choosen tables and filled in the missing data;
+- I selected and filtered data from database and matched them to data come from Excel file.
+
+**3. Load:**
+
+The last stage is used to load the data that has been transformed to the database.
+
+I have used SQLite database for storing the extracted and transformed data:
+- First I have created an engine to connect with the database and loaded choosen data into pandas dataframes;
+- After transform step I have created a new dataframe for transformed data;
+- Finally I putted receive file to sql database.
+   
 ### Technologies
 Project is created with:
 - SQL, Python 3.6,
