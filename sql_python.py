@@ -47,7 +47,7 @@ def transform_data(df1, df2):
 
 # Loading
 def load_data(db_name, file):
-    ''' Loading data: saving the transformed data in database'''
+    '''Loading data: saving the transformed data in database'''
     # Create a connection with SQLite database specified by the db.sqlite file
     try:
         connection = sqlite3.connect(db_name)
@@ -70,5 +70,4 @@ if __name__ == "__main__":
     db_name = "db.sqlite"
     file = 'Processing Report.xlsx'
     load_data(db_name, file)
-    
     
